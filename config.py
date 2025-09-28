@@ -1,0 +1,1 @@
+CHROMA_PERSIST_DIR = "./chroma_data" 
