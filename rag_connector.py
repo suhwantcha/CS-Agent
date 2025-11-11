@@ -27,15 +27,23 @@ class RAGConnector:
 
     def get_embedding(self, text):
         """텍스트를 OpenAI 임베딩 API로 벡터화"""
-        # 실제 API 호출 코드는 비용이 발생하므로 생략하고, 
-        # 임베딩 모델을 사용하는 함수가 여기 들어갑니다.
-        # 프로젝트 시연을 위해 실제 임베딩 모델을 호출하는 코드를 작성해야 합니다.
-        
-        # 실제 구현 코드 예시 (추후 GPT-4o 사용을 위해 필요):
-        # response = openai_client.embeddings.create(input=[text], model="text-embedding-ada-002")
-        # return response.data[0].embedding
-        
-        return [0.1] * 1536 # 더미 벡터 반환 (테스트용)
+        response = openai_client.embeddings.create(input=[text], model="text-embedding-3-small")
+        return response.data[0].embedding
+
+    def retrieve_context(self, query_vector, n_results=3):
+        """쿼리 벡터를 사용하여 ChromaDB에서 관련성 높은 컨텍스트를 검색합니다."""
+        try:
+            results = self.collection.query(
+                query_embeddings=[query_vector],
+                n_results=n_results
+            )
+            # 검색된 문서의 내용을 하나의 문자열로 합쳐서 반환
+            context = "\n".join([doc for doc in results['documents'][0]])
+            return context
+        except Exception as e:
+            print(f"⚠️ RAG 컨텍스트 검색 중 오류 발생: {e}")
+            return ""
+
 
     def add_manuals(self, manuals_data):
         """JSON 데이터에서 RAG 콘텐츠를 추출하여 ChromaDB에 저장"""

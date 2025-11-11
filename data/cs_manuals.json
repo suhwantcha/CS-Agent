@@ -1,0 +1,142 @@
+[
+  {
+    "manual_id": "CS-PAY-001",
+    "domain": "결제/시스템",
+    "sub_category": "앱 결제 오류",
+    "difficulty": "medium",
+    "urgency": "high",
+    "content_for_rag": "문제 정의: [XA-101 카드 유효성 오류] 결제 최종 단계에서 'XA-101: 카드 정보 불일치' 메시지 발생. 고객 문의 예시: '앱에서 카드로 결제하는데 자꾸 오류 화면(스크린샷 첨부)이 떠요.' 해결 흐름: 1. 고객에게 카드 유효 기간, 비밀번호 입력 오류 횟수를 확인하여 안내. 2. AI 도구 '결제_재시도_가이드_생성기' 발송. 3. 2회 실패 시, 수동 결제 링크 발송을 통한 최종 해결. AI 행동 규칙: XA-101 오류 발생 시, 재시도 도구 후 2회 실패 기록 발견 시 '도구_생성_수동결제_링크'를 우선 실행해야 합니다.",
+    "ai_action_rules": {
+      "problem_code": "XA-101",
+      "trigger_condition": "problem_code:XA-101 AND solution_flow:2회_실패",
+      "priority_action": "도구_생성_수동결제_링크",
+      "fallback_solution": "상담사_인계_긴급_알림"
+    }
+  },
+  {
+    "manual_id": "CS-DEL-002",
+    "domain": "배송",
+    "sub_category": "새벽배송 지연",
+    "difficulty": "easy",
+    "urgency": "medium",
+    "content_for_rag": "문제 정의: [DL-203 배송 상태 미갱신] 주문 후 48시간 이상 배송 상태가 멈춰있음. 고객 문의 예시: '주문한 상품이 5일 동안 멈춰있어요. 운송장 조회가 안 됩니다.' 해결 흐름: 1. 정형 DB에서 '발송 지연 (4일 이상)' 태그 확인. 2. AI 도구 '자동_보상쿠폰_발급기'를 발송하여 즉시 사과 및 보상 제공. 3. 고객 감성이 '매우_부정'일 경우, VIP 처리하여 익일 배송 확정 메시지 발송. AI 행동 규칙: DL-203 발생 시, 무조건 자동_보상쿠폰_발급기를 실행하여 고객 불만을 조기에 해소해야 합니다.",
+    "ai_action_rules": {
+      "problem_code": "DL-203",
+      "trigger_condition": "problem_code:DL-203 AND user_sentiment:매우_부정",
+      "priority_action": "도구_생성_담당자_연결_VIP_우선",
+      "fallback_solution": "익일_배송_확정_메시지_발송"
+    }
+  },
+  {
+    "manual_id": "CS-FOOD-103",
+    "domain": "신선도/위생",
+    "sub_category": "상품 변질 (곰팡이/변색)",
+    "difficulty": "hard",
+    "urgency": "very_high",
+    "content_for_rag": "문제 정의: [SPOIL-101] 수령 후 24시간 이내 식품에 곰팡이나 심한 변색 발생 (멀티모달 이미지 첨부 클레임). 고객 문의 예시: '어제 받은 샐러드에 흰 곰팡이가 피었어요. 사진 첨부합니다. 유통기한 3일 남았는데.' 해결 흐름: 1. 고객에게 즉시 사과 및 사진 확인 (GPT-4o Vision 사용). 2. 오염 정도 심각 시, 추가 질문 없이 '즉시 환불 및 회수' 처리 (PostgreSQL 로깅). AI 행동 규칙: SPOIL-101 발생 및 '이미지_오염_심각' 태그 감지 시, '도구_생성_긴급_품질팀_알림'을 최우선 실행하여 책임자에게 이관해야 합니다.",
+    "ai_action_rules": {
+      "problem_code": "SPOIL-101",
+      "trigger_condition": "problem_code:SPOIL-101 AND image_tag:오염_심각",
+      "priority_action": "도구_생성_긴급_품질팀_알림",
+      "fallback_solution": "도구_생성_즉시_전액환불"
+    }
+  },
+  {
+    "manual_id": "CS-SVC-004",
+    "domain": "서비스 이용",
+    "sub_category": "리뷰 답변 자동화",
+    "difficulty": "easy",
+    "urgency": "low",
+    "content_for_rag": "문제 정의: [REVIEW-001] 고객 리뷰에 대한 매크로가 아닌 맞춤형 답변 등록 요청. 고객 요청 예시: '별점 5점짜리 리뷰에 진심을 담아 공손하게 답변해줘.' 해결 흐름: 1. 리뷰 텍스트 및 별점 확인. 2. AI에게 '매우 공손한 말투' 시스템 프롬프트 부여. 3. AI가 리뷰 내용을 요약하고 감사를 표하는 맞춤형 답변 생성 후 네이버 API를 통해 등록. AI 행동 규칙: REVIEW-001 유형은 LLaMA 모델로 처리하여 비용을 절감하며, '말투_공손하게' 태그를 반드시 적용해야 합니다.",
+    "ai_action_rules": {
+      "problem_code": "REVIEW-001",
+      "trigger_condition": "review_score:5점 AND replied_status:N",
+      "priority_action": "도구_생성_자동_맞춤_답변",
+      "fallback_solution": "답변_등록_실패_알림"
+    }
+  },
+  {
+    "manual_id": "CS-DEL-206",
+    "domain": "배송",
+    "sub_category": "배송 기사 불만",
+    "difficulty": "medium",
+    "urgency": "high",
+    "content_for_rag": "문제 정의: [CL-001 배송원 응대 불만] 고객이 배송 기사의 불친절한 태도에 대해 불만을 제기함 (음성 첨부 가능). 고객 문의 예시: '새벽 6시에 전화해서 짜증을 냈어요. 통화 녹음 파일 첨부합니다.' 해결 흐름: 1. 고객에게 즉시 사과하고 상황 파악. 2. Whisper API로 음성 파일 텍스트 변환 및 감성 분석. 3. 부정 감성이 높고 위협적일 경우 즉시 책임자 인계. AI 행동 규칙: [CL-001] 클레임 발생 시, 고객 감성 분석 결과에 따라 '책임자 알림' 도구를 최우선으로 실행해야 합니다.",
+    "ai_action_rules": {
+      "problem_code": "CL-001",
+      "trigger_condition": "user_sentiment:위협적 OR audio_tag:고성",
+      "priority_action": "도구_생성_책임자_긴급_알림",
+      "fallback_solution": "문자_사과_및_콜백_요청"
+    }
+  },
+  {
+    "manual_id": "CS-REF-302",
+    "domain": "환불/반품",
+    "sub_category": "오배송/재고 부족",
+    "difficulty": "easy",
+    "urgency": "medium",
+    "content_for_rag": "문제 정의: [OR-115 오배송 및 결품] 주문하지 않은 상품이 오거나, 주문 상품이 누락됨. 고객 문의 예시: '검은색을 시켰는데 흰색이 왔어요. 재고 부족으로 하나는 안 왔어요.' 해결 흐름: 1. 주문DB 조회 후 오배송/결품 여부 확인. 2. 오배송 시, '즉시_재배송_신청기' 도구 발송. 3. 결품 시, '부분_환불_처리' 도구 발송. AI 행동 규칙: OR-115 유형은 복잡도가 낮으므로 LLaMA 모델로 처리하며, 결품 시 부분 환불 도구를 반드시 사용해야 합니다.",
+    "ai_action_rules": {
+      "problem_code": "OR-115",
+      "trigger_condition": "problem_code:OR-115 AND fulfillment_status:결품",
+      "priority_action": "도구_생성_부분_환불_처리",
+      "fallback_solution": "재고_확보_후_발송_안내"
+    }
+  },
+  {
+    "manual_id": "CS-BI-401",
+    "domain": "경영/분석",
+    "sub_category": "주간 리뷰 동향 보고서",
+    "difficulty": "hard",
+    "urgency": "low",
+    "content_for_rag": "문제 정의: [BI-401] CS 데이터 기반 주간 비즈니스 인텔리전스 보고서 요청. 사장님 요청 예시: '지난주 리뷰가 왜 부정적으로 변했는지 분석 보고서를 만들어줘.' 해결 흐름: 1. PostgreSQL에서 최근 7일간의 모든 리뷰 로그 조회. 2. GPT-4o를 호출하여 '포장', '배송업체', '위생' 키워드의 감성 변화율 분석. 3. 핵심 불만 요소를 요약하고, '다음 주 점검 항목'을 제안하는 텍스트 생성. AI 행동 규칙: BI-401 유형은 오직 GPT-4o로만 처리해야 하며, 분석 결과에 '다음 주 경영 추천 도구'를 반드시 포함해야 합니다.",
+    "ai_action_rules": {
+      "problem_code": "BI-401",
+      "trigger_condition": "reporting_cycle:Weekly",
+      "priority_action": "도구_생성_경영_추천_도구",
+      "fallback_solution": "분석_대상_기간_재설정"
+    }
+  },
+  {
+    "manual_id": "CS-MARKET-501",
+    "domain": "마케팅",
+    "sub_category": "우수 리뷰 추천 조합기",
+    "difficulty": "medium",
+    "urgency": "low",
+    "content_for_rag": "문제 정의: [MKT-501] 마케팅 효과를 높일 우수 리뷰 조합 요청. 사장님 요청 예시: '메인 페이지에 걸어둘 5점짜리 리뷰 3개를 골라줘. 사진이 있고 50자 이상인 것으로.' 해결 흐름: 1. PostgreSQL에서 별점 5점, 사진 첨부, 50자 이상 리뷰를 필터링. 2. AI에게 리뷰 텍스트를 제공하여 가장 감성적으로 긍정적인 3개를 선택하도록 요청. 3. 선택된 리뷰 ID를 반환. AI 행동 규칙: MKT-501 유형은 사장님의 요청에 따라 필터링 기준을 유연하게 조정할 수 있는 '도구_생성_리뷰_조합기'를 사용해야 한다.",
+    "ai_action_rules": {
+      "problem_code": "MKT-501",
+      "trigger_condition": "user_command:리뷰_추천",
+      "priority_action": "도구_생성_리뷰_조합기",
+      "fallback_solution": "필터링_조건_완화_안내"
+    }
+  },
+  {
+    "manual_id": "CS-POLICY-601",
+    "domain": "정책/규정",
+    "sub_category": "사장님 환불 불가 방침 준수",
+    "difficulty": "hard",
+    "urgency": "high",
+    "content_for_rag": "문제 정의: [POLICY-601] 고객이 환불을 요청했으나, 상품이 '개인 보관 부주의'로 변질된 경우. 고객 문의 예시: '3일 전에 받은 상품인데 냉장고에 넣어놨는데 상했어요. 환불해주세요.' 해결 흐름: 1. 정형 DB에서 수령 시각 확인. 2. 매뉴얼 'SPOIL-101'에 따라 '수령 후 24시간' 정책을 안내. 3. AI 답변 시, 사장님의 '환불 X 방침'을 근거로 제시하되, 공손한 말투를 유지하도록 프롬프트에 명시. AI 행동 규칙: POLICY-601 유형은 무조건 'RAG_정책_강화' 도구를 사용하여 규정 텍스트를 직접 인용해야 한다.",
+    "ai_action_rules": {
+      "problem_code": "POLICY-601",
+      "trigger_condition": "refund_request AND user_fault_suspected",
+      "priority_action": "도구_생성_RAG_정책_강화",
+      "fallback_solution": "쿠폰_보상_처리_최종_방어"
+    }
+  },
+  {
+    "manual_id": "CS-SYS-701",
+    "domain": "결제/시스템",
+    "sub_category": "네이버 톡톡 연결 오류",
+    "difficulty": "easy",
+    "urgency": "medium",
+    "content_for_rag": "문제 정의: [API-701] 네이버 톡톡 문의가 시스템에 수집되지 않음. 고객 문의 예시: '톡톡 문의했는데 답변이 너무 늦어요.' 해결 흐름: 1. 정형 DB에서 문의 수집 시간 확인. 2. 수집 지연 확인 시, 고객에게 사과 후 'AI_톡톡_수동_응답' 도구를 발동하여 즉시 수동 답변 등록. AI 행동 규칙: API-701 유형은 시스템 복구보다 고객 응대를 우선하며, '도구_생성_수동_답변'을 통해 고객 만족도를 유지해야 한다.",
+    "ai_action_rules": {
+      "problem_code": "API-701",
+      "trigger_condition": "inquiry_latency:30분_초과",
+      "priority_action": "도구_생성_수동_답변",
+      "fallback_solution": "시스템_관리자_알림"
+    }
+  }
+]

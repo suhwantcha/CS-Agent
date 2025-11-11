@@ -1,0 +1,38 @@
+[
+  {
+    "review_id": "rev-001",
+    "customer_id": "happy_customer_123",
+    "product_id": "prod-mug-01",
+    "rating": 5,
+    "review_text": "컵 디자인이 너무 예뻐요! 포장도 꼼꼼하게 잘 해주셔서 안전하게 받았습니다. 다음에도 또 구매할게요!",
+    "image_url": null,
+    "created_at": "2025-11-10T10:00:00Z"
+  },
+  {
+    "review_id": "rev-002",
+    "customer_id": "impatient_user_456",
+    "product_id": "prod-plate-02",
+    "rating": 2,
+    "review_text": "배송이 너무 느려요. 주문한지 일주일이 넘었는데 아직도 안 왔습니다. 언제쯤 받을 수 있나요?",
+    "image_url": null,
+    "created_at": "2025-11-10T14:30:00Z"
+  },
+  {
+    "review_id": "rev-003",
+    "customer_id": "angry_customer_789",
+    "product_id": "prod-mug-01",
+    "rating": 1,
+    "review_text": "제품을 받았는데 손잡이가 깨져서 왔습니다. 이걸 어떻게 사용하라는 건가요? 당장 교환해주세요.",
+    "image_url": "https://i.ebayimg.com/images/g/aJgAAOSwS~RlcK~5/s-l1600.jpg",
+    "created_at": "2025-11-11T09:00:00Z"
+  },
+  {
+    "review_id": "rev-004",
+    "customer_id": "satisfied_diner_101",
+    "product_id": "prod-plate-02",
+    "rating": 4,
+    "review_text": "접시가 생각보다 크고 좋네요. 음식 담으니까 더 예뻐보여요. 다만 가격이 조금만 더 저렴했으면 좋겠어요.",
+    "image_url": null,
+    "created_at": "2025-11-11T11:00:00Z"
+  }
+]
