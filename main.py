@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Form, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv
 from typing import Optional
@@ -11,6 +12,21 @@ from db_connector import initialize_db_and_data, get_db_connection # ❷ 자기�
 load_dotenv() 
 
 app = FastAPI()
+
+# CORS 미들웨어 추가
+origins = [
+    "http://localhost",
+    "http://localhost:5173", # Vite 기본 포트
+    "http://127.0.0.1:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # 전역 변수로 AI 에이전트와 RAG 커넥터를 저장합니다.
 rag_connector: Optional[RAGConnector] = None
