@@ -91,6 +91,7 @@ async def handle_customer_query(
     try:
         # LLM Agent를 호출하여 답변 생성 (강화된 쿼리 사용)
         response_text = llm_agent.generate_response(
+            customer_id=customer_id,
             customer_query=enriched_query,
             complexity="complex_multimodal" if image_url else "medium"
         )

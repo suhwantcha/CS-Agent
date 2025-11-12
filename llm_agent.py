@@ -2,7 +2,7 @@ import os
 import uuid
 from openai import OpenAI
 from rag_connector import RAGConnector
-from db_connector import get_db_connection
+from db_connector import get_failure_logs_by_customer
 
 # 모델 분기 및 비용 효율화를 위해 LLaMA 대신 GPT-3.5-turbo를 저비용 모델로 가정
 LOW_COST_MODEL = "gpt-3.5-turbo"
@@ -22,25 +22,25 @@ class LLM_Agent:
             return HIGH_COST_MODEL
         return LOW_COST_MODEL
 
-    def generate_response(self, customer_query: str, complexity="medium", failure_logs: list = []):
+    def generate_response(self, customer_id: str, customer_query: str, complexity="medium"):
         """
         고객 문의를 처리하고 답변을 생성하는 메인 함수
         """
         # 1. RAG 검색 (CS 매뉴얼 기반 지식 획득)
         print(f"-> 1. RAG 검색 실행 중: {customer_query}")
         
-        # (실제로는 쿼리를 벡터화한 후 검색해야 함. 여기서는 더미 벡터를 사용)
         query_vector = self.rag.get_embedding(customer_query)
         retrieved_context = self.rag.retrieve_context(query_vector)
 
         # 2. 자기진화 및 행동 교정 (동적 프롬프트)
-        # 실패 로그를 읽어와 GPT-4o의 행동을 교정하는 지시사항을 생성
+        # DB에서 현재 고객의 실패 로그를 읽어와 GPT-4o의 행동을 교정하는 지시사항을 생성
+        failure_logs = get_failure_logs_by_customer(customer_id)
         correction_prompt = ""
         if failure_logs:
-            # 실패 로그를 프롬프트에 추가하여 AI의 행동을 교정합니다.
+            print(f"-> ⚙️ 자기진화: {len(failure_logs)}개의 실패 기록을 발견하여 프롬프트에 반영합니다.")
             correction_prompt = "--- 경고: 이전 실패 기록 발견 ---\n"
             for log in failure_logs:
-                correction_prompt += f"이전 실패 코드: {log.problem_code}. AI는 {log.ai_action_failed}를 했으나, 최종적으로 {log.final_resolution}이 정답이었습니다. 이 지침을 최우선으로 따르십시오.\n"
+                correction_prompt += f"과거 '{log.input_text}' 문의에 대해 AI가 '{log.ai_action_failed}'라고 잘못 답변했습니다. 올바른 답변은 '{log.final_resolution}'입니다. 이 실수를 반복하지 마십시오.\n"
         
         # 3. 모델 선택 및 LLM 호출
         model_to_use = self._determine_model(complexity)

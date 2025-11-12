@@ -2,7 +2,9 @@ import os
 import psycopg2
 from dotenv import load_dotenv
 import json
+from typing import List
 from rag_connector import RAGConnector
+from models import FailureLog
 
 # 환경 변수 로드
 load_dotenv()
@@ -121,6 +123,44 @@ def initialize_db_and_data():
         print(f"⚠️ ChromaDB 저장 오류: {e}")
         
     return manuals
+
+def get_failure_logs_by_customer(customer_id: str, limit: int = 3) -> List[FailureLog]:
+    """특정 고객의 최근 실패 로그를 DB에서 조회합니다."""
+    conn = get_db_connection()
+    if not conn:
+        return []
+
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT log_id, customer_id, input_text, ai_action_failed, resolution_feedback, final_resolution, created_at
+                FROM inquiry_logs
+                WHERE customer_id = %s AND resolution_feedback = 'failure'
+                ORDER BY created_at DESC
+                LIMIT %s
+                """,
+                (customer_id, limit)
+            )
+            logs = cur.fetchall()
+            
+            # 결과를 FailureLog 모델 객체 리스트로 변환
+            return [
+                FailureLog(
+                    log_id=row[0],
+                    customer_id=row[1],
+                    input_text=row[2],
+                    ai_action_failed=row[3],
+                    resolution_feedback=row[4],
+                    final_resolution=row[5],
+                    created_at=row[6]
+                ) for row in logs
+            ]
+    except Exception as e:
+        print(f"⚠️ 실패 로그 조회 중 오류 발생: {e}")
+        return []
+    finally:
+        conn.close()
 
 if __name__ == '__main__':
     initialize_db_and_data()
