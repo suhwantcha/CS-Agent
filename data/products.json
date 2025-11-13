@@ -1,0 +1,370 @@
+[
+  {
+    "originProductNo": 1000001,
+    "channelProductNo": "C001-WANGGALBI650",
+    "productName": "순살 왕갈비탕 밀키트 650g",
+    "category": {"categoryId": "10001", "categoryName": "한식/탕류"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "650g"},
+      {"attributeName": "유통기한", "attributeValue": "제조일로부터 7일"}
+    ],
+    "productImages": [{"url": "https://image.example.com/wanggalbi650.jpg"}],
+    "price": {"costPrice": 4000, "salePrice": 6200, "originalPrice": 8900, "discountRate": 30},
+    "stockQuantity": 150,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["갈비탕", "밀키트", "보양식"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000002,
+    "channelProductNo": "C002-SUNDAEGUK300",
+    "productName": "순대국 300g 캠핑용 국밥",
+    "category": {"categoryId": "10001", "categoryName": "한식/국밥"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "300g"}
+    ],
+    "productImages": [{"url": "https://image.example.com/sundaeguk300.jpg"}],
+    "price": {"costPrice": 3000, "salePrice": 5000, "originalPrice": 6500, "discountRate": 23},
+    "stockQuantity": 200,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["순대국", "국밥", "캠핑"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000003,
+    "channelProductNo": "C003-CHIZDONKATSU400",
+    "productName": "치즈돈까스 2팩 (400g)",
+    "category": {"categoryId": "10002", "categoryName": "밀키트/돈까스"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "400g"}
+    ],
+    "productImages": [{"url": "https://image.example.com/cheesedonkatsu400.jpg"}],
+    "price": {"costPrice": 3500, "salePrice": 5900, "originalPrice": 8900, "discountRate": 33},
+    "stockQuantity": 180,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["돈까스", "치즈", "간편식"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000004,
+    "channelProductNo": "C004-ODEONGTANG250",
+    "productName": "어묵탕 오뎅탕 5팩 세트 250g",
+    "category": {"categoryId": "10002", "categoryName": "밀키트/탕류"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "구성", "attributeValue": "5팩"},
+      {"attributeName": "중량", "attributeValue": "250g"}
+    ],
+    "productImages": [{"url": "https://image.example.com/odeongtang5set250.jpg"}],
+    "price": {"costPrice": 5500, "salePrice": 9950, "originalPrice": 16900, "discountRate": 41},
+    "stockQuantity": 90,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["어묵탕", "오뎅탕", "캠핑"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000005,
+    "channelProductNo": "C005-JJUKKUMI300",
+    "productName": "양념 쭈꾸미볶음 300g",
+    "category": {"categoryId": "10002", "categoryName": "밀키트/볶음류"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "300g"},
+      {"attributeName": "맛", "attributeValue": "매운맛"}
+    ],
+    "productImages": [{"url": "https://image.example.com/jjukkumi300.jpg"}],
+    "price": {"costPrice": 4500, "salePrice": 7900, "originalPrice": 12500, "discountRate": 36},
+    "stockQuantity": 130,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["쭈꾸미", "볶음", "매운맛"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000006,
+    "channelProductNo": "C006-BULGOGI500",
+    "productName": "불고기 밀키트 500g",
+    "category": {"categoryId": "10002", "categoryName": "한식/볶음류"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "500g"}
+    ],
+    "productImages": [{"url": "https://image.example.com/bulgogi500.jpg"}],
+    "price": {"costPrice": 5000, "salePrice": 8700, "originalPrice": 11500, "discountRate": 24},
+    "stockQuantity": 210,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["불고기", "한식", "밀키트"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000007,
+    "channelProductNo": "C007-DAKGALBI600",
+    "productName": "춘천식 닭갈비 밀키트 600g",
+    "category": {"categoryId": "10002", "categoryName": "한식/볶음류"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "600g"},
+      {"attributeName": "맛", "attributeValue": "매운맛"}
+    ],
+    "productImages": [{"url": "https://image.example.com/dakgalbi600.jpg"}],
+    "price": {"costPrice": 5200, "salePrice": 8800, "originalPrice": 11900, "discountRate": 26},
+    "stockQuantity": 195,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["닭갈비", "춘천", "매운맛"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000008,
+    "channelProductNo": "C008-JEYUKBOKKEUM400",
+    "productName": "제육볶음 밀키트 400g",
+    "category": {"categoryId": "10002", "categoryName": "한식/볶음류"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "400g"}
+    ],
+    "productImages": [{"url": "https://image.example.com/jeyukbokkeum400.jpg"}],
+    "price": {"costPrice": 4000, "salePrice": 6800, "originalPrice": 9900, "discountRate": 31},
+    "stockQuantity": 250,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["제육볶음", "한식", "간편식"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000009,
+    "channelProductNo": "C009-TANGSUYUK400",
+    "productName": "중화식 탕수육 400g",
+    "category": {"categoryId": "10004", "categoryName": "중식/튀김류"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "400g"}
+    ],
+    "productImages": [{"url": "https://image.example.com/tangsuyuk400.jpg"}],
+    "price": {"costPrice": 4800, "salePrice": 7200, "originalPrice": 10800, "discountRate": 33},
+    "stockQuantity": 180,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["탕수육", "중식", "간편식"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000010,
+    "channelProductNo": "C010-KIMCHIJJIGAE500",
+    "productName": "김치찌개 밀키트 500g",
+    "category": {"categoryId": "10001", "categoryName": "한식/찌개류"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "500g"}
+    ],
+    "productImages": [{"url": "https://image.example.com/kimchijjigae500.jpg"}],
+    "price": {"costPrice": 3800, "salePrice": 6400, "originalPrice": 9500, "discountRate": 32},
+    "stockQuantity": 140,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["김치찌개", "찌개", "한식"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000011,
+    "channelProductNo": "C011-BUDAEJJIGAE700",
+    "productName": "부대찌개 밀키트 700g (2인분)",
+    "category": {"categoryId": "10001", "categoryName": "한식/찌개류"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "700g"}
+    ],
+    "productImages": [{"url": "https://image.example.com/budaejjigae700.jpg"}],
+    "price": {"costPrice": 5500, "salePrice": 9900, "originalPrice": 13000, "discountRate": 23},
+    "stockQuantity": 110,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["부대찌개", "찌개", "밀키트", "캠핑"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000012,
+    "channelProductNo": "C012-GOGIMANDU1KG",
+    "productName": "육즙가득 고기왕만두 1kg",
+    "category": {"categoryId": "10003", "categoryName": "간식/만두"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "1kg"}
+    ],
+    "productImages": [{"url": "https://image.example.com/gogimandu1kg.jpg"}],
+    "price": {"costPrice": 6000, "salePrice": 9900, "originalPrice": 12000, "discountRate": 17},
+    "stockQuantity": 300,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["만두", "고기만두", "간식"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000013,
+    "channelProductNo": "C013-KIMCHIMANDU1KG",
+    "productName": "매콤 칼칼 김치왕만두 1kg",
+    "category": {"categoryId": "10003", "categoryName": "간식/만두"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "1kg"}
+    ],
+    "productImages": [{"url": "https://image.example.com/kimchimandu1kg.jpg"}],
+    "price": {"costPrice": 6500, "salePrice": 10500, "originalPrice": 12500, "discountRate": 16},
+    "stockQuantity": 280,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["만두", "김치만두", "매운맛"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000014,
+    "channelProductNo": "C014-OJINGEOBOKKEUM300",
+    "productName": "불맛 오징어볶음 300g",
+    "category": {"categoryId": "10002", "categoryName": "한식/볶음류"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "300g"},
+      {"attributeName": "맛", "attributeValue": "매운맛"}
+    ],
+    "productImages": [{"url": "https://image.example.com/ojingeo300.jpg"}],
+    "price": {"costPrice": 5000, "salePrice": 8900, "originalPrice": 13000, "discountRate": 31},
+    "stockQuantity": 120,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["오징어볶음", "볶음", "매운맛"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000015,
+    "channelProductNo": "C015-ANDONGJJIMDAK800",
+    "productName": "안동 찜닭 밀키트 800g (뼈)",
+    "category": {"categoryId": "10002", "categoryName": "한식/찜류"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "800g"}
+    ],
+    "productImages": [{"url": "https://image.example.com/jjimdak800.jpg"}],
+    "price": {"costPrice": 8000, "salePrice": 12900, "originalPrice": 16000, "discountRate": 19},
+    "stockQuantity": 160,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["찜닭", "안동찜닭", "밀키트"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000016,
+    "channelProductNo": "C016-JANGJORIM200",
+    "productName": "한돈 메추리알 장조림 200g",
+    "category": {"categoryId": "10005", "categoryName": "반찬/조림류"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉장"},
+      {"attributeName": "중량", "attributeValue": "200g"},
+      {"attributeName": "유통기한", "attributeValue": "제조일로부터 10일"}
+    ],
+    "productImages": [{"url": "https://image.example.com/jangjorim200.jpg"}],
+    "price": {"costPrice": 3000, "salePrice": 5500, "originalPrice": 6000, "discountRate": 8},
+    "stockQuantity": 70,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["반찬", "장조림", "메추리알"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000017,
+    "channelProductNo": "C017-MYEOLCHIBOKKEUM150",
+    "productName": "견과류 멸치볶음 150g",
+    "category": {"categoryId": "10005", "categoryName": "반찬/볶음류"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉장"},
+      {"attributeName": "중량", "attributeValue": "150g"},
+      {"attributeName": "유통기한", "attributeValue": "제조일로부터 10일"}
+    ],
+    "productImages": [{"url": "https://image.example.com/myeolchi150.jpg"}],
+    "price": {"costPrice": 2500, "salePrice": 4900, "originalPrice": 5500, "discountRate": 10},
+    "stockQuantity": 85,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["반찬", "멸치볶음", "견과류"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000018,
+    "channelProductNo": "C018-TTEOKBOKKI400",
+    "productName": "매운 국물 떡볶이 400g (2인분)",
+    "category": {"categoryId": "10003", "categoryName": "간식/떡볶이"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉장"},
+      {"attributeName": "중량", "attributeValue": "400g"},
+      {"attributeName": "맛", "attributeValue": "매운맛"}
+    ],
+    "productImages": [{"url": "https://image.example.com/tteokbokki400.jpg"}],
+    "price": {"costPrice": 3000, "salePrice": 5900, "originalPrice": 7000, "discountRate": 15},
+    "stockQuantity": 130,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["떡볶이", "국물떡볶이", "매운맛", "간식"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000019,
+    "channelProductNo": "C019-HOTDOG500",
+    "productName": "추억의 옛날 핫도그 500g (5개입)",
+    "category": {"categoryId": "10003", "categoryName": "간식/핫도그"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "500g"}
+    ],
+    "productImages": [{"url": "https://image.example.com/hotdog500.jpg"}],
+    "price": {"costPrice": 4500, "salePrice": 7900, "originalPrice": 9900, "discountRate": 20},
+    "stockQuantity": 220,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["핫도그", "간식", "냉동간식"],
+    "status": "ON_SALE"
+  },
+  {
+    "originProductNo": 1000020,
+    "channelProductNo": "C020-SOGOGIMUGUK500",
+    "productName": "소고기 뭇국 500g",
+    "category": {"categoryId": "10001", "categoryName": "한식/국밥"},
+    "brand": "서강몰",
+    "manufacturer": "서강푸드",
+    "productAttributes": [
+      {"attributeName": "보관방법", "attributeValue": "냉동"},
+      {"attributeName": "중량", "attributeValue": "500g"}
+    ],
+    "productImages": [{"url": "https://image.example.com/muguk500.jpg"}],
+    "price": {"costPrice": 3500, "salePrice": 5900, "originalPrice": 7900, "discountRate": 25},
+    "stockQuantity": 100,
+    "delivery": {"deliveryCompany": "CJ대한통운", "deliveryFee": 3500},
+    "tags": ["소고기뭇국", "국밥", "한식"],
+    "status": "SOLD_OUT"
+  }
+]

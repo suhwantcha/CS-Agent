@@ -1,11 +1,8 @@
 import chromadb
-import os
 from openai import OpenAI
 from dotenv import load_dotenv
-
-# config.py 파일을 만들었다면 해당 파일에서 경로를 가져오도록 수정 가능
-CHROMA_PERSIST_DIR = "./chroma_data" 
-COLLECTION_NAME = "naver_cs_manuals"
+from typing import List, Dict, Any
+import config # config 모듈 임포트
 
 # OpenAI API 키 로드 (임베딩 모델 사용을 위함)
 load_dotenv()
@@ -13,82 +10,137 @@ openai_client = OpenAI()
 
 class RAGConnector:
     def __init__(self):
-        # ChromaDB 클라이언트 초기화 (데이터가 CHROMA_PERSIST_DIR에 저장됨)
-        self.client = chromadb.PersistentClient(path=CHROMA_PERSIST_DIR)
+        # ChromaDB 클라이언트 초기화
+        self.client = chromadb.PersistentClient(path=config.CHROMA_PERSIST_DIR)
         
         # 콜렉션 생성 또는 기존 콜렉션 가져오기
         self.collection = self.client.get_or_create_collection(
-            name=COLLECTION_NAME,
-            # AI의 지식 검색을 위한 벡터 모델 (OpenAI의 text-embedding-ada-002 사용을 가정)
-            # 여기서는 모델 이름을 문자열로만 지정합니다.
+            name=config.COLLECTION_NAME,
             metadata={"hnsw:space": "cosine"}
         )
-        print(f"✅ RAG: ChromaDB 컬렉션 '{COLLECTION_NAME}' 준비 완료.")
+        print(f"✅ RAG: ChromaDB 컬렉션 '{config.COLLECTION_NAME}' 준비 완료.")
 
-    def get_embedding(self, text):
+    def get_embedding(self, text: str) -> List[float]:
         """텍스트를 OpenAI 임베딩 API로 벡터화"""
         response = openai_client.embeddings.create(input=[text], model="text-embedding-3-small")
         return response.data[0].embedding
 
-    def retrieve_context(self, query_vector, n_results=3):
-        """쿼리 벡터를 사용하여 ChromaDB에서 관련성 높은 컨텍스트를 검색합니다."""
+    def retrieve_context(self, query: str, n_results: int = 5) -> str:
+        """쿼리를 사용하여 ChromaDB에서 관련성 높은 컨텍스트를 검색합니다."""
         try:
+            query_vector = self.get_embedding(query)
             results = self.collection.query(
                 query_embeddings=[query_vector],
                 n_results=n_results
             )
-            # 검색된 문서의 내용을 하나의 문자열로 합쳐서 반환
             context = "\n".join([doc for doc in results['documents'][0]])
             return context
         except Exception as e:
             print(f"⚠️ RAG 컨텍스트 검색 중 오류 발생: {e}")
             return ""
 
-
-    def add_manuals(self, manuals_data):
-        """JSON 데이터에서 RAG 콘텐츠를 추출하여 ChromaDB에 저장"""
-        ids = []
-        documents = []
-        metadatas = []
-        embeddings = []
+    def _add_documents(self, ids: List[str], documents: List[str], metadatas: List[Dict[str, Any]]):
+        """공통 로직을 사용하여 문서를 ChromaDB에 추가"""
+        if not ids:
+            return
         
-        for item in manuals_data:
-            doc_id = item['manual_id']
-            # RAG 검색 대상이 될 콘텐츠를 content_for_rag에서 가져옴
-            content = item['content_for_rag'] 
-            
-            ids.append(doc_id)
-            documents.append(content)
-            # 메타데이터도 같이 저장하여 검색 결과를 필터링할 때 사용
-            metadatas.append({"domain": item['domain'], "urgency": item['urgency']})
-            
-            # 임베딩 생성 (실제 구현 시 self.get_embedding(content) 사용)
-            embeddings.append(self.get_embedding(content)) 
-
+        embeddings = [self.get_embedding(doc) for doc in documents]
+        
         self.collection.add(
             ids=ids,
             embeddings=embeddings,
             documents=documents,
             metadatas=metadatas
         )
-        print(f"✅ RAG: {len(ids)}개의 CS 매뉴얼이 ChromaDB에 벡터화되어 저장되었습니다.")
+
+    def add_manuals(self, manuals_data: List[Dict[str, Any]]):
+        """CS 매뉴얼 데이터를 ChromaDB에 저장"""
+        ids = [item['manual_id'] for item in manuals_data]
+        documents = [item['content_for_rag'] for item in manuals_data]
+        metadatas = [
+            {"doc_type": "manual", "domain": item['domain'], "urgency": item['urgency']}
+            for item in manuals_data
+        ]
+        self._add_documents(ids, documents, metadatas)
+        print(f"✅ RAG: {len(ids)}개의 CS 매뉴얼이 ChromaDB에 추가되었습니다.")
+
+    def add_products(self, products_data: List[Dict[str, Any]]):
+        """제품 데이터를 ChromaDB에 저장"""
+        ids = [f"prod_{item['origin_product_no']}" for item in products_data]
+        documents = [
+            f"상품명: {item['product_name']}, 카테고리: {item['category_name']}"
+            for item in products_data
+        ]
+        metadatas = [
+            {"doc_type": "product", "product_no": item['origin_product_no']}
+            for item in products_data
+        ]
+        self._add_documents(ids, documents, metadatas)
+        print(f"✅ RAG: {len(ids)}개의 제품 정보가 ChromaDB에 추가되었습니다.")
+
+    def add_qnas(self, qnas_data: List[Dict[str, Any]]):
+        """Q&A 데이터를 ChromaDB에 저장"""
+        ids = [item['question_id'] for item in qnas_data]
+        documents = [
+            f"질문: {item['question_text']}, 답변: {item.get('answer_text', '아직 답변이 없습니다.')}"
+            for item in qnas_data
+        ]
+        metadatas = [
+            {"doc_type": "qna", "product_no": item.get('origin_product_no'), "is_answered": item['is_answered']}
+            for item in qnas_data
+        ]
+        self._add_documents(ids, documents, metadatas)
+        print(f"✅ RAG: {len(ids)}개의 Q&A가 ChromaDB에 추가되었습니다.")
+
+    def add_reviews(self, reviews_data: List[Dict[str, Any]]):
+        """리뷰 데이터를 ChromaDB에 저장"""
+        ids = [item['review_id'] for item in reviews_data]
+        documents = [item['review_text'] for item in reviews_data]
+        metadatas = [
+            {"doc_type": "review", "product_id": item['product_id'], "rating": item['rating']}
+            for item in reviews_data
+        ]
+        self._add_documents(ids, documents, metadatas)
+        print(f"✅ RAG: {len(ids)}개의 리뷰가 ChromaDB에 추가되었습니다.")
 
 
 if __name__ == '__main__':
-    # ChromaDB 연결 테스트 및 초기 매뉴얼 데이터 로드 시뮬레이션
-    
-    # 문과 팀이 제공할 JSON 데이터를 여기에 로드했다고 가정 (실제로는 JSON 파일을 읽어와야 함)
-    dummy_manuals = [
-        {"manual_id": "CS-PAY-001", "domain": "결제", "urgency": "high", "content_for_rag": "결제 오류 XA-101 발생 시 앱 재설치를 안내 후, 실패하면 수동 결제 링크를 보낸다."},
-        {"manual_id": "CS-DEL-002", "domain": "배송", "urgency": "medium", "content_for_rag": "배송 지연 4일 이상 시, 고객에게 지연 상황을 사과하고 보상 쿠폰을 즉시 발급한다."}
-    ]
-    
+    # RAGConnector 테스트
     rag_connector = RAGConnector()
+
+    # 기존 컬렉션의 모든 데이터를 삭제하고 새로 시작 (테스트용)
+    try:
+        rag_connector.client.delete_collection(name=COLLECTION_NAME)
+        rag_connector.collection = rag_connector.client.get_or_create_collection(
+            name=COLLECTION_NAME,
+            metadata={"hnsw:space": "cosine"}
+        )
+        print("🧹 기존 컬렉션을 삭제하고 새로 시작합니다.")
+    except Exception as e:
+        print(f"컬렉션 삭제 중 오류 (무시 가능): {e}")
+
+    # 더미 데이터
+    dummy_manuals = [{"manual_id": "CS-DEL-002", "domain": "배송", "urgency": "medium", "content_for_rag": "배송 지연 4일 이상 시, 고객에게 지연 상황을 사과하고 보상 쿠폰을 즉시 발급한다."}]
+    dummy_products = [{"origin_product_no": 1000001, "product_name": "순살 왕갈비탕 밀키트 650g", "category_name": "한식/탕류"}]
+    dummy_qnas = [{"question_id": "QNA-2002", "question_text": "어제 주문했는데 오늘 출발 안했네요.", "answer_text": "고객님, 저희 오늘출발 마감은 오후 2시입니다.", "origin_product_no": 1000004, "is_answered": True}]
+    dummy_reviews = [{"review_id": "REV-1002", "product_id": 1000016, "rating": 1, "review_text": "뚜껑 여니까 바로 시큼한 냄새가 나고 곰팡이가 피어있습니다."}]
+
+    # 데이터 추가
     rag_connector.add_manuals(dummy_manuals)
+    rag_connector.add_products(dummy_products)
+    rag_connector.add_qnas(dummy_qnas)
+    rag_connector.add_reviews(dummy_reviews)
     
     # 검색 테스트
-    query = "냉동 식품이 다 녹아서 클레임 걸고 싶어요."
-    query_vector = rag_connector.get_embedding(query)
-    
-    # 실제 검색을 실행하는 코드는 추후 LLM_Agent 모듈에서 구현됩니다.
-    # print("검색 결과:", rag_connector.collection.query(query_embeddings=[query_vector], n_results=1))
+    query = "반품 정책 알려줘"
+    context = rag_connector.retrieve_context(query, n_results=2)
+    print(f"\n--- 검색 테스트 ---")
+    print(f"쿼리: {query}")
+    print(f"검색된 컨텍스트:\n{context}")
+    print("-" * 20)
+
+    query_2 = "갈비탕"
+    context_2 = rag_connector.retrieve_context(query_2, n_results=1)
+    print(f"쿼리: {query_2}")
+    print(f"검색된 컨텍스트:\n{context_2}")
+    print("-" * 20)

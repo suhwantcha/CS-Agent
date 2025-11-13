@@ -17,17 +17,18 @@ const Chat = () => {
     setLoading(true);
 
     try {
-      const formData = new FormData();
-      formData.append('customer_query', input);
-      // In a real app, you'd get the customer_id from auth.
-      formData.append('customer_id', 'TEST_USER_FRONTEND'); 
+      // The customer_id would come from an auth context in a real app.
+      const payload = {
+        customer_id: 'TEST_USER_FRONTEND',
+        query: input,
+      };
 
-      const response = await axios.post('http://127.0.0.1:8000/api/query', formData);
+      const response = await axios.post('http://127.0.0.1:8000/api/chat', payload);
 
       const aiMessage = {
         sender: 'ai',
-        text: response.data.answer,
-        log_id: response.data.log_id,
+        text: response.data.response, // Align with API response
+        log_id: response.data.log_id, // Assuming log_id is still returned
       };
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {

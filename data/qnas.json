@@ -1,0 +1,75 @@
+[
+  {
+    "questionId": "QNA-2001",
+    "originProductNo": 1000001,
+    "productName": "순살 왕갈비탕 밀키트 650g",
+    "customerId": "loyal_customer_01",
+    "questionType": "PRODUCT",
+    "questionText": "이거 뼈가 다 발라져 있는 순살 맞죠? 아이가 먹을거라서요.",
+    "isAnswered": true,
+    "questionDate": "2025-11-10T10:00:00Z",
+    "answer": {
+      "answerContentId": "ANS-2001",
+      "answerText": "네, 고객님. 100% 순살로만 구성되어 아이가 먹기에도 좋습니다. 감사합니다.",
+      "answerDate": "2025-11-10T10:05:00Z"
+    }
+  },
+  {
+    "questionId": "QNA-2002",
+    "productOrderId": "PO-20251110-002",
+    "originProductNo": 1000004,
+    "productName": "어묵탕 오뎅탕 5팩 세트 250g",
+    "customerId": "complainer_01",
+    "questionType": "DELIVERY",
+    "questionText": "어제 주문했는데 오늘 출발 안했네요. 오늘 출발 마감 몇시죠?",
+    "isAnswered": true,
+    "questionDate": "2025-11-11T14:30:00Z",
+    "answer": {
+      "answerContentId": "ANS-2002",
+      "answerText": "고객님, 저희 오늘출발 마감은 오후 2시입니다. 고객님 주문건은 2시 이후에 접수되어 익일(12일) 출고될 예정입니다. ㅠㅠ",
+      "answerDate": "2025-11-11T14:32:00Z"
+    }
+  },
+  {
+    "questionId": "QNA-2003",
+    "originProductNo": 1000018,
+    "productName": "매운 국물 떡볶이 400g (2인분)",
+    "customerId": "new_customer_01",
+    "questionType": "PRODUCT",
+    "questionText": "이거 많이 매운가요? 맵기 정도가 궁금해요.",
+    "isAnswered": false,
+    "questionDate": "2025-11-12T15:00:00Z",
+    "answer": null
+  },
+  {
+    "questionId": "QNA-2004",
+    "productOrderId": "PO-20251111-001",
+    "originProductNo": 1000003,
+    "productName": "치즈돈까스 2팩 (400g)",
+    "customerId": "hungry_student",
+    "questionType": "CLAIM",
+    "questionText": "돈까스 2팩 시켰는데 1팩만 왔어요. 어떻게 된거죠?",
+    "isAnswered": true,
+    "questionDate": "2025-11-12T11:00:00Z",
+    "answer": {
+      "answerContentId": "ANS-2004",
+      "answerText": "죄송합니다 고객님. 누락된 1팩은 금일 바로 재발송 처리해드리겠습니다. (CS-REF-302 매뉴얼 연동)",
+      "answerDate": "2025-11-12T11:02:00Z"
+    }
+  },
+  {
+    "questionId": "QNA-2005",
+    "originProductNo": 1000012,
+    "productName": "육즙가득 고기왕만두 1kg",
+    "customerId": "loyal_customer_01",
+    "questionType": "ETC",
+    "questionText": "이거 재입고 언제 되나요? 품절 풀리면 알려주세요.",
+    "isAnswered": true,
+    "questionDate": "2025-11-12T09:00:00Z",
+    "answer": {
+      "answerContentId": "ANS-2005",
+      "answerText": "고객님, 해당 상품은 11월 15일 재입고 예정입니다. (CS-PROD-215 매뉴얼 연동)",
+      "answerDate": "2025-11-12T09:01:00Z"
+    }
+  }
+]

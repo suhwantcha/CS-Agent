@@ -1,0 +1,35 @@
+[
+  {
+    "customerId": "loyal_customer_01",
+    "name": "김서강",
+    "segment": "VIP",
+    "totalSpend": 450500,
+    "totalOrders": 15,
+    "lastOrderDate": "2025-11-10",
+    "mainCategory": "한식/탕류",
+    "avgRating": 4.8,
+    "totalClaims": 0
+  },
+  {
+    "customerId": "complainer_01",
+    "name": "박마포",
+    "segment": "At-Risk",
+    "totalSpend": 85000,
+    "totalOrders": 3,
+    "lastOrderDate": "2025-11-11",
+    "mainCategory": "밀키트/탕류",
+    "avgRating": 2.1,
+    "totalClaims": 2
+  },
+  {
+    "customerId": "new_customer_01",
+    "name": "최신규",
+    "segment": "New", 
+    "totalSpend": 7900,
+    "totalOrders": 1,
+    "lastOrderDate": "2025-11-11",
+    "mainCategory": "간식/핫도그",
+    "avgRating": null,
+    "totalClaims": 0
+  }
+]

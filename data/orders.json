@@ -1,0 +1,92 @@
+[
+  {
+    "productOrderId": "PO-20251110-001",
+    "orderId": "ORD-20251110-A",
+    "productInfo": {
+      "originProductNo": 1000001,
+      "productName": "순살 왕갈비탕 밀키트 650g",
+      "quantity": 2,
+      "totalAmount": 12400
+    },
+    "orderer": { "id": "loyal_customer_01", "name": "김서강" },
+    "shippingAddress": { "receiver": "김서강", "address": "서울시 마포구" },
+    "orderStatus": "DELIVERED",
+    "paymentDate": "2025-11-10T09:00:00Z",
+    "deliveryCompleteDate": "2025-11-11T13:00:00Z",
+    "claimData": null
+  },
+  {
+    "productOrderId": "PO-20251110-002",
+    "orderId": "ORD-20251110-B",
+    "productInfo": {
+      "originProductNo": 1000004,
+      "productName": "어묵탕 오뎅탕 5팩 세트 250g",
+      "quantity": 1,
+      "totalAmount": 9950
+    },
+    "orderer": { "id": "complainer_01", "name": "박마포" },
+    "shippingAddress": { "receiver": "박마포", "address": "서울시 용산구" },
+    "orderStatus": "SHIPPING_DELAYED",
+    "paymentDate": "2025-11-10T14:30:00Z",
+    "deliveryCompleteDate": null,
+    "claimData": null
+  },
+  {
+    "productOrderId": "PO-20251111-001",
+    "orderId": "ORD-20251111-A",
+    "productInfo": {
+      "originProductNo": 1000003,
+      "productName": "치즈돈까스 2팩 (400g)",
+      "quantity": 2,
+      "totalAmount": 11800
+    },
+    "orderer": { "id": "hungry_student", "name": "이대생" },
+    "shippingAddress": { "receiver": "이대생", "address": "서울시 서대문구" },
+    "orderStatus": "DELIVERED",
+    "paymentDate": "2025-11-11T10:00:00Z",
+    "deliveryCompleteDate": "2025-11-12T10:30:00Z",
+    "claimData": {
+      "claimType": "RESEND",
+      "reason": "PRODUCT_MISSING",
+      "status": "APPROVED",
+      "requestDate": "2025-11-12T11:00:00Z"
+    }
+  },
+  {
+    "productOrderId": "PO-20251111-002",
+    "orderId": "ORD-20251111-B",
+    "productInfo": {
+      "originProductNo": 1000016,
+      "productName": "한돈 메추리알 장조림 200g",
+      "quantity": 1,
+      "totalAmount": 5500
+    },
+    "orderer": { "id": "complainer_01", "name": "박마포" },
+    "shippingAddress": { "receiver": "박마포", "address": "서울시 용산구" },
+    "orderStatus": "RETURN",
+    "paymentDate": "2025-11-11T11:00:00Z",
+    "deliveryCompleteDate": "2025-11-12T14:00:00Z",
+    "claimData": {
+      "claimType": "RETURN",
+      "reason": "PRODUCT_SPOILED",
+      "status": "APPROVED",
+      "requestDate": "2025-11-12T15:00:00Z"
+    }
+  },
+  {
+    "productOrderId": "PO-20251111-003",
+    "orderId": "ORD-20251111-C",
+    "productInfo": {
+      "originProductNo": 1000019,
+      "productName": "추억의 옛날 핫도그 500g (5개입)",
+      "quantity": 1,
+      "totalAmount": 7900
+    },
+    "orderer": { "id": "new_customer_01", "name": "최신규" },
+    "shippingAddress": { "receiver": "최신규", "address": "경기도 수원시" },
+    "orderStatus": "DELIVERED",
+    "paymentDate": "2025-11-11T17:00:00Z",
+    "deliveryCompleteDate": "2025-11-12T16:00:00Z",
+    "claimData": null
+  }
+]

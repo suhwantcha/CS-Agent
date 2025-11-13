@@ -1,0 +1,44 @@
+[
+  {
+    "settleDate": "2025-11-06",
+    "totalPaymentAmount": 875400,
+    "totalCommission": -78786,
+    "totalSettlementAmount": 796614
+  },
+  {
+    "settleDate": "2025-11-07",
+    "totalPaymentAmount": 912300,
+    "totalCommission": -82107,
+    "totalSettlementAmount": 830193
+  },
+  {
+    "settleDate": "2025-11-08",
+    "totalPaymentAmount": 1250100,
+    "totalCommission": -112509,
+    "totalSettlementAmount": 1137591
+  },
+  {
+    "settleDate": "2025-11-09",
+    "totalPaymentAmount": 1170500,
+    "totalCommission": -105345,
+    "totalSettlementAmount": 1065155
+  },
+  {
+    "settleDate": "2025-11-10",
+    "totalPaymentAmount": 750200,
+    "totalCommission": -67518,
+    "totalSettlementAmount": 682682
+  },
+  {
+    "settleDate": "2025-11-11",
+    "totalPaymentAmount": 820000,
+    "totalCommission": -73800,
+    "totalSettlementAmount": 746200
+  },
+  {
+    "settleDate": "2025-11-12",
+    "totalPaymentAmount": 930500,
+    "totalCommission": -83745,
+    "totalSettlementAmount": 846755
+  }
+]

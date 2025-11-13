@@ -1,0 +1,25 @@
+{
+  "storeInfo": {
+    "storeName": "서강몰",
+    "ceoName": "서사장",
+    "account": "seokang_ceo"
+  },
+  "deliveryPolicy": {
+    "baseFee": 3500,
+    "freeConditionalAmount": 40000,
+    "thisDayDispatchCutoff": "14:00"
+  },
+  "claimPolicy": {
+    "returnAddress": "서울시 마포구 백범로 35 (서강빌딩) 5층 서강푸드",
+    "returnFee": 7000,
+    "exchangeFee": 7000
+  },
+  "csInfo": {
+    "csNumber": "1588-0000",
+    "csOperatingHours": "평일 10:00 - 17:00 (주말, 공휴일 휴무)"
+  },
+  "logisticsInfo": {
+    "mainDeliveryCompany": "CJ대한통운",
+    "outboundLocation": "경기도 용인시 물류센터 A"
+  }
+}
