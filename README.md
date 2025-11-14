@@ -4,7 +4,7 @@
 
 ## 👥 두 가지 사용자 유형
 
-이 시스템은 내부 사용자인 **관리자(CEO)**와 **상담원**이라는 두 가지 역할에 따라 맞춤형 기능을 제공하여 효율적인 업무 분담을 지원합니다.
+이 시스템은 내부 사용자인 **관리자/CEO**와 **상담원**이라는 두 가지 역할에 따라 맞춤형 기능을 제공하여 효율적인 업무 분담을 지원합니다.
 
 1.  **관리자/CEO (Admin/CEO):**
     -   **역할:** 비즈니스 오너 또는 총괄 관리자
@@ -119,8 +119,11 @@
 
 ### 📸 프로그램 실행 화면
 
-![SmartCRM 실행 화면](assets/screenshot.png)
-_SmartCRM의 관리자 대시보드 및 상담원 허브 화면 예시_
+<img width="300" height="150" alt="1" src="https://github.com/user-attachments/assets/b5337714-6af9-41ff-8874-929c59e882a4" />
+<img width="150" height="150" alt="3" src="https://github.com/user-attachments/assets/aa8c0528-6f82-4e0d-8e0c-0eaefdf778ce" />
+<img width="150" height="150" alt="4" src="https://github.com/user-attachments/assets/e469479d-0b94-4cc4-b1a1-92ca9e89f464" />
+<img width="300" height="150" alt="2" src="https://github.com/user-attachments/assets/9cab787e-d7c2-42e0-bd97-f97216f1ecbc" />
+
 
 ## 📁 프로젝트 구조
 
