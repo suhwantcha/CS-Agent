@@ -120,8 +120,8 @@
 ### 📸 프로그램 실행 화면
 
 <img width="300" height="150" alt="1" src="https://github.com/user-attachments/assets/b5337714-6af9-41ff-8874-929c59e882a4" /><br>
-<img width="150" height="150" alt="3" src="https://github.com/user-attachments/assets/aa8c0528-6f82-4e0d-8e0c-0eaefdf778ce" /><br>
-<img width="150" height="150" alt="4" src="https://github.com/user-attachments/assets/e469479d-0b94-4cc4-b1a1-92ca9e89f464" /><br>
+<img width="250" height="250" alt="3" src="https://github.com/user-attachments/assets/aa8c0528-6f82-4e0d-8e0c-0eaefdf778ce" /><br>
+<img width="250" height="250" alt="4" src="https://github.com/user-attachments/assets/e469479d-0b94-4cc4-b1a1-92ca9e89f464" /><br>
 <img width="300" height="150" alt="2" src="https://github.com/user-attachments/assets/9cab787e-d7c2-42e0-bd97-f97216f1ecbc" /><br>
 
 
