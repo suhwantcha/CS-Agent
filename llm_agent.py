@@ -196,6 +196,36 @@ class LLM_Agent:
         except Exception as e:
             return json.dumps({"error": f"리뷰 답변 생성 중 오류 발생: {e}"}, ensure_ascii=False)
 
+    def get_ai_suggestion(self, query: str):
+        """
+        고객의 질문에 대해 RAG 검색을 기반으로 한 간단한 답변 제안을 생성합니다.
+        :param query: 고객의 질문 텍스트
+        :return: AI가 제안하는 답변 문자열
+        """
+        try:
+            retrieved_context = self.rag.retrieve_context(query)
+            
+            system_prompt = f"""
+            당신은 고객 문의에 대해 빠르고 간결한 답변 초안을 작성하는 AI 어시스턴트입니다.
+            아래 제공된 [참고 자료]를 바탕으로 고객의 질문에 대한 답변을 생성해주세요.
+            답변은 고객에게 바로 전달될 수 있는 완전한 문장 형태여야 합니다.
+
+            [참고 자료]: {retrieved_context}
+            """
+            
+            response = self.client.chat.completions.create(
+                model=config.LOW_COST_MODEL,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": query}
+                ],
+                temperature=0.2,
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            print(f"⚠️ AI 답변 제안 생성 중 오류 발생: {e}")
+            return "답변 제안을 생성하는 데 실패했습니다."
+
     # --- LLM이 사용할 도구(Tools) 정의 끝 ---
 
     def _get_tool_definitions(self):
@@ -361,7 +391,7 @@ class LLM_Agent:
         tools = self._get_tool_definitions()
 
         try:
-            response = self.openai_client.chat.completions.create(
+            response = self.client.chat.completions.create(
                 model=model_to_use,
                 messages=messages,
                 tools=tools,
@@ -408,7 +438,7 @@ class LLM_Agent:
                         )
                 
                 # 도구 실행 결과를 바탕으로 다시 LLM 호출
-                second_response = self.openai_client.chat.completions.create(
+                second_response = self.client.chat.completions.create(
                     model=model_to_use,
                     messages=messages,
                     temperature=0.0

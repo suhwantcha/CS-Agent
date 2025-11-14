@@ -7,14 +7,20 @@ function App() {
   const [userRole, setUserRole] = useState(null); // 'admin', 'agent', or null
 
   const handleRoleSelect = (role) => {
+    console.log(`App.jsx: 역할 선택됨 -> ${role}`);
     setUserRole(role);
   };
+
+  console.log(`App.jsx: 현재 렌더링 중. userRole: ${userRole}`);
 
   return (
     <Container maxWidth="lg"> {/* maxWidth를 lg로 확장하여 대시보드 공간 확보 */}
       <Box sx={{ my: 4, textAlign: 'center' }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          AI CS & CRM Agent
+        <Typography variant="h3" component="h1" gutterBottom>
+          SmartCRM
+        </Typography>
+        <Typography variant="h6" component="h2" gutterBottom sx={{ mt: -2, mb: 3, color: 'text.secondary' }}>
+          AI Customer Manager for Self-Employed Owners
         </Typography>
 
         {!userRole ? (

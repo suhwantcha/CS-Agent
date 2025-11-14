@@ -1,34 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button, List, ListItem, ListItemText, Paper, Typography, CircularProgress, IconButton } from '@mui/material';
 import { ThumbUp, ThumbDown } from '@mui/icons-material';
 import axios from 'axios';
 
-const Chat = () => {
+const Chat = ({ inquiry }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [aiSuggestion, setAiSuggestion] = useState('');
+  const [suggestionLoading, setSuggestionLoading] = useState(false);
+
+  // inquiry prop이 변경될 때마다 (새 문의가 선택될 때마다) 실행
+  useEffect(() => {
+    if (!inquiry) {
+      setMessages([]);
+      setInput('');
+      setAiSuggestion('');
+      return;
+    }
+
+    // 새 문의가 선택되면 기존 채팅 내용 초기화
+    setMessages([{ sender: 'user', text: inquiry.question_text }]);
+    setInput('');
+    setAiSuggestion('');
+    setSuggestionLoading(true);
+
+    const fetchSuggestion = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/ai/suggestion?query=${encodeURIComponent(inquiry.question_text)}`);
+        setAiSuggestion(response.data.suggestion);
+      } catch (error) {
+        console.error('Failed to fetch AI suggestion:', error);
+        setAiSuggestion('AI 답변 제안을 가져오는 데 실패했습니다.');
+      } finally {
+        setSuggestionLoading(false);
+      }
+    };
+
+    fetchSuggestion();
+
+  }, [inquiry]);
+
 
   const handleSend = async () => {
-    if (input.trim() === '') return;
+    if (input.trim() === '' || !inquiry) return;
 
-    const userMessage = { sender: 'user', text: input };
+    const userMessage = { sender: 'agent', text: input }; // 상담원이 보내는 메시지
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setLoading(true);
 
     try {
-      // The customer_id would come from an auth context in a real app.
       const payload = {
-        customer_id: 'TEST_USER_FRONTEND',
-        query: input,
+        customer_id: inquiry.customer_id,
+        query: input, // 상담원이 직접 입력한 내용으로 쿼리
       };
 
       const response = await axios.post('http://127.0.0.1:8000/api/chat', payload);
 
       const aiMessage = {
         sender: 'ai',
-        text: response.data.response, // Align with API response
-        log_id: response.data.log_id, // Assuming log_id is still returned
+        text: response.data.response,
+        log_id: response.data.log_id,
       };
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
@@ -44,7 +77,6 @@ const Chat = () => {
   };
 
   const handleFeedback = async (log_id, feedback) => {
-    // This is a placeholder for a more complex feedback UI
     let final_resolution = null;
     if (feedback === 'failure') {
       final_resolution = prompt('어떤 답변이 올바른 답변인가요?');
@@ -69,24 +101,41 @@ const Chat = () => {
     }
   };
 
+  if (!inquiry) {
+    return (
+        <Paper elevation={3} sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <Typography variant="h6" color="text.secondary">
+                왼쪽에서 문의를 선택해주세요.
+            </Typography>
+        </Paper>
+    );
+  }
+
   return (
-    <Paper elevation={3} sx={{ height: '70vh', display: 'flex', flexDirection: 'column' }}>
+    <Paper elevation={3} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ flexGrow: 1, overflowY: 'auto', p: 2 }}>
         <List>
           {messages.map((msg, index) => (
-            <ListItem key={index} sx={{ justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start' }}>
+            <ListItem key={index} sx={{ justifyContent: msg.sender === 'user' || msg.sender === 'agent' ? 'flex-end' : 'flex-start' }}>
               <Box
                 sx={{
-                  bgcolor: msg.sender === 'user' ? 'primary.main' : 'grey.300',
-                  color: msg.sender === 'user' ? 'primary.contrastText' : 'text.primary',
+                  bgcolor: msg.sender === 'user' || msg.sender === 'agent' ? 'primary.main' : 'grey.300',
+                  color: msg.sender === 'user' || msg.sender === 'agent' ? 'primary.contrastText' : 'text.primary',
                   p: 1.5,
                   borderRadius: 2,
-                  maxWidth: '70%',
+                  maxWidth: '80%',
                 }}
               >
-                <ListItemText primary={msg.text} />
+                <ListItemText 
+                    primary={msg.text} 
+                    secondary={msg.sender === 'user' ? '고객' : msg.sender === 'agent' ? '상담원' : 'AI'}
+                    secondaryTypographyProps={{ 
+                        color: msg.sender === 'user' || msg.sender === 'agent' ? 'rgba(255, 255, 255, 0.7)' : 'text.secondary',
+                        textAlign: 'left'
+                    }}
+                />
                 {msg.sender === 'ai' && msg.log_id && (
-                  <Box sx={{ mt: 1 }}>
+                  <Box sx={{ mt: 1, textAlign: 'right' }}>
                     <IconButton size="small" onClick={() => handleFeedback(msg.log_id, 'success')}>
                       <ThumbUp fontSize="small" />
                     </IconButton>
@@ -100,26 +149,63 @@ const Chat = () => {
           ))}
         </List>
       </Box>
-      <Box sx={{ p: 2, display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ p: 2, display: 'flex', alignItems: 'center', borderTop: '1px solid #ddd' }}>
         <TextField
           fullWidth
           variant="outlined"
           placeholder="메시지를 입력하세요..."
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => setInput(e.input)}
           onKeyPress={(e) => e.key === 'Enter' && !loading && handleSend()}
-          disabled={loading}
+          disabled={loading || !inquiry}
         />
         <Button
           variant="contained"
           color="primary"
           onClick={handleSend}
-          disabled={loading}
+          disabled={loading || !inquiry}
           sx={{ ml: 1, p: "14px" }}
         >
           {loading ? <CircularProgress size={24} color="inherit" /> : '전송'}
         </Button>
       </Box>
+
+      {/* AI 답변 제안 및 도구 영역 */}
+      <Paper elevation={2} sx={{ p: 2, borderTop: '1px solid #ddd' }}>
+        <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 'bold' }}>
+          🤖 AI 답변 제안
+        </Typography>
+        <Box sx={{ p: 1.5, bgcolor: 'action.hover', borderRadius: 1, mb: 1, minHeight: '50px' }}>
+            {suggestionLoading ? <CircularProgress size={20} /> : (
+                <Typography variant="body2">
+                    {aiSuggestion}
+                </Typography>
+            )}
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Button 
+            variant="outlined" 
+            size="small"
+            onClick={() => setInput(aiSuggestion)}
+            disabled={suggestionLoading || !aiSuggestion}
+          >
+            ✅ AI 답변 사용
+          </Button>
+          <div>
+            <IconButton size="small" onClick={() => alert('피드백 기능이 호출됩니다.')} disabled={suggestionLoading}>
+              <ThumbDown fontSize="small" />
+            </IconButton>
+            <Button 
+              variant="text" 
+              size="small"
+              onClick={() => document.getElementById('file-input').click()}
+            >
+              📎 첨부
+            </Button>
+            <input type="file" id="file-input" style={{ display: 'none' }} />
+          </div>
+        </Box>
+      </Paper>
     </Paper>
   );
 };

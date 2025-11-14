@@ -388,9 +388,6 @@ const AdminDashboard = () => {
       </Box>
 
       {/* 여기에 다른 관리자 대시보드 컴포넌트들이 추가될 예정 */}
-      <Typography variant="body1" sx={{ mt: 4 }}>
-        여기에 다른 관리자 대시보드 컴포넌트들이 들어갈 예정입니다.
-      </Typography>
     </Box>
   );
 };

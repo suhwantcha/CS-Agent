@@ -11,25 +11,80 @@
     "totalClaims": 0
   },
   {
-    "customerId": "complainer_01",
-    "name": "박마포",
-    "segment": "At-Risk",
+    "customerId": "loyal_customer_02",
+    "name": "이세종",
+    "segment": "VIP",
+    "totalSpend": 520000,
+    "totalOrders": 20,
+    "lastOrderDate": "2025-11-12",
+    "mainCategory": "한식/탕류",
+    "avgRating": 4.9,
+    "totalClaims": 0
+  },
+  {
+    "customerId": "loyal_customer_03",
+    "name": "박여의",
+    "segment": "VIP",
+    "totalSpend": 380000,
+    "totalOrders": 12,
+    "lastOrderDate": "2025-11-09",
+    "mainCategory": "밀키트/구이",
+    "avgRating": 4.7,
+    "totalClaims": 1
+  },
+  {
+    "customerId": "at_risk_01",
+    "name": "최마포",
+    "segment": "이탈 위험 고객",
     "totalSpend": 85000,
     "totalOrders": 3,
-    "lastOrderDate": "2025-11-11",
+    "lastOrderDate": "2025-08-11",
     "mainCategory": "밀키트/탕류",
     "avgRating": 2.1,
     "totalClaims": 2
   },
   {
-    "customerId": "new_customer_01",
-    "name": "최신규",
-    "segment": "New", 
-    "totalSpend": 7900,
-    "totalOrders": 1,
-    "lastOrderDate": "2025-11-11",
+    "customerId": "at_risk_02",
+    "name": "정용산",
+    "segment": "이탈 위험 고객",
+    "totalSpend": 120000,
+    "totalOrders": 5,
+    "lastOrderDate": "2025-07-20",
     "mainCategory": "간식/핫도그",
-    "avgRating": null,
+    "avgRating": 2.5,
+    "totalClaims": 1
+  },
+  {
+    "customerId": "at_risk_03",
+    "name": "윤강남",
+    "segment": "이탈 위험 고객",
+    "totalSpend": 45000,
+    "totalOrders": 2,
+    "lastOrderDate": "2025-09-01",
+    "mainCategory": "한식/탕류",
+    "avgRating": 3.0,
+    "totalClaims": 3
+  },
+  {
+    "customerId": "at_risk_04",
+    "name": "장서초",
+    "segment": "이탈 위험 고객",
+    "totalSpend": 210000,
+    "totalOrders": 8,
+    "lastOrderDate": "2025-08-15",
+    "mainCategory": "밀키트/구이",
+    "avgRating": 2.8,
     "totalClaims": 0
+  },
+  {
+    "customerId": "at_risk_05",
+    "name": "송강동",
+    "segment": "이탈 위험 고객",
+    "totalSpend": 95000,
+    "totalOrders": 4,
+    "lastOrderDate": "2025-09-05",
+    "mainCategory": "한식/탕류",
+    "avgRating": 2.2,
+    "totalClaims": 1
   }
 ]

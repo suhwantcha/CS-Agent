@@ -28,14 +28,26 @@ class ChatRequest(BaseModel):
     query: str
 
 # --- 전역 인스턴스 초기화 ---
-# 애플리케이션 시작 시 한 번만 초기화하여 재사용
-try:
+rag_connector: RAGConnector = None
+llm_agent: LLM_Agent = None
+
+@app.on_event("startup")
+async def startup_event():
+    """FastAPI 서버 시작 시 DB 및 AI 에이전트를 초기화합니다."""
+    global rag_connector, llm_agent
+    
+    print("\n--- 🚀 서버 시작 및 AI 시스템 초기화 중 ---")
+    
+    # 1. DB 연결 및 데이터 로드 (PostgreSQL 테이블 생성 + 매뉴얼 로드)
+    db_connector.initialize_db_and_data()
+    
+    # 2. ChromaDB 커넥터 초기화
     rag_connector = RAGConnector()
-    llm_agent = LLM_Agent(rag_connector)
-    print("✅ API 서버: RAG 및 LLM 에이전트 초기화 완료.")
-except Exception as e:
-    llm_agent = None
-    print(f"❌ API 서버: 에이전트 초기화 실패: {e}")
+    
+    # 3. LLM Agent 초기화
+    llm_agent = LLM_Agent(rag_connector=rag_connector)
+    
+    print("--- ✅ AI 시스템 초기화 완료. 서버 가동 준비 완료. ---\n")
 
 # --- API 엔드포인트 ---
 @app.post("/api/chat")
@@ -198,10 +210,44 @@ async def get_negative_reviews_with_draft_replies():
     
     return {"negative_reviews": reviews_with_replies}
 
+@app.get("/api/orders")
+async def get_orders_by_customer_id(customer_id: str):
+    """특정 고객의 주문 목록을 조회합니다."""
+    try:
+        all_orders = db_connector.get_orders_from_db()
+        customer_orders = [order for order in all_orders if order['customer_id'] == customer_id]
+        return {"orders": customer_orders}
+    except Exception as e:
+        print(f"❌ 고객 주문 내역 조회 중 오류 발생: {e}")
+        return {"error": f"고객 주문 내역 조회 중 오류가 발생했습니다."}
+
+@app.get("/api/customers/{customer_id}/claims")
+async def get_customer_claims(customer_id: str):
+    """특정 고객의 클레임 목록을 조회합니다."""
+    try:
+        claims = db_connector.get_claims_by_customer(customer_id)
+        return {"claims": claims}
+    except Exception as e:
+        print(f"❌ 고객 클레임 조회 중 오류 발생: {e}")
+        return {"error": "고객 클레임 조회 중 오류가 발생했습니다."}
+
+@app.get("/api/customers/{customer_id}/reviews")
+async def get_customer_reviews(customer_id: str):
+    """특정 고객의 리뷰 목록을 조회합니다."""
+    try:
+        reviews = db_connector.get_reviews_by_customer(customer_id)
+        return {"reviews": reviews}
+    except Exception as e:
+        print(f"❌ 고객 리뷰 조회 중 오류 발생: {e}")
+        return {"error": "고객 리뷰 조회 중 오류가 발생했습니다."}
+
 @app.get("/api/admin/customers_by_segment")
 async def get_customers_by_segment_api(segment: str):
     try:
-        customers = db_connector.get_customers_by_segment(segment=segment)
+        if segment == "All":
+            customers = db_connector.get_customers_from_db()
+        else:
+            customers = db_connector.get_customers_by_segment(segment=segment)
         return {"customers": customers}
     except Exception as e:
         print(f"❌ 고객 세그먼트 조회 중 오류 발생: {e}")
@@ -213,6 +259,35 @@ async def send_coupon_api(customer_ids: List[str], coupon_details: str):
     print(f"✅ {len(customer_ids)}명의 고객에게 쿠폰 발송 요청: {coupon_details}")
     print(f"   대상 고객 ID: {customer_ids}")
     return {"message": f"{len(customer_ids)}명의 고객에게 쿠폰 발송 요청이 접수되었습니다. (시뮬레이션)"}
+
+@app.get("/api/inquiries")
+async def get_inquiries(status: str):
+    """문의 상태(new, completed)에 따라 문의 목록을 조회합니다."""
+    try:
+        if status == "new":
+            is_answered = False
+        elif status == "completed":
+            is_answered = True
+        else:
+            return {"error": "Invalid status value"}, 400
+        
+        inquiries = db_connector.get_inquiries_by_status(is_answered)
+        return {"inquiries": inquiries}
+    except Exception as e:
+        print(f"❌ 문의 목록 조회 중 오류 발생: {e}")
+        return {"error": "문의 목록 조회 중 오류가 발생했습니다."}
+
+@app.get("/api/ai/suggestion")
+async def get_ai_suggestion(query: str):
+    """고객 문의에 대한 AI 답변 제안을 생성합니다."""
+    if not llm_agent:
+        return {"error": "LLM 에이전트가 초기화되지 않았습니다."}
+    try:
+        suggestion = llm_agent.get_ai_suggestion(query)
+        return {"suggestion": suggestion}
+    except Exception as e:
+        print(f"❌ AI 답변 제안 생성 중 오류 발생: {e}")
+        return {"error": "AI 답변 제안 생성 중 오류가 발생했습니다."}
 
 @app.post("/api/admin/approve_review_reply")
 async def approve_review_reply(review_id: str, approved_reply: str):

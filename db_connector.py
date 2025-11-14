@@ -397,6 +397,60 @@ def initialize_db_and_data():
         
     return manuals
 
+def get_claims_by_customer(customer_id: str) -> List[Dict[str, Any]]:
+    """특정 고객의 클레임 내역(주문 기반)을 조회합니다."""
+    conn = get_db_connection()
+    if not conn: return []
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT product_order_id, product_name, claim_type, claim_reason, order_status FROM orders WHERE customer_id = %s AND claim_type IS NOT NULL",
+                (customer_id,)
+            )
+            columns = [desc[0] for desc in cur.description]
+            return [dict(zip(columns, row)) for row in cur.fetchall()]
+    except Exception as e:
+        print(f"⚠️ 고객 클레임 조회 중 오류 발생: {e}")
+        return []
+    finally:
+        conn.close()
+
+def get_reviews_by_customer(customer_id: str) -> List[Dict[str, Any]]:
+    """특정 고객이 작성한 리뷰 목록을 조회합니다."""
+    conn = get_db_connection()
+    if not conn: return []
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT review_id, product_id, rating, review_text, created_at FROM reviews WHERE customer_id = %s ORDER BY created_at DESC",
+                (customer_id,)
+            )
+            columns = [desc[0] for desc in cur.description]
+            return [dict(zip(columns, row)) for row in cur.fetchall()]
+    except Exception as e:
+        print(f"⚠️ 고객 리뷰 조회 중 오류 발생: {e}")
+        return []
+    finally:
+        conn.close()
+
+def get_inquiries_by_status(is_answered: bool) -> List[Dict[str, Any]]:
+    """is_answered 상태에 따라 문의(Q&A) 목록을 조회합니다."""
+    conn = get_db_connection()
+    if not conn: return []
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT question_id, origin_product_no, customer_id, question_type, question_text, is_answered FROM qnas WHERE is_answered = %s",
+                (is_answered,)
+            )
+            columns = [desc[0] for desc in cur.description]
+            return [dict(zip(columns, row)) for row in cur.fetchall()]
+    except Exception as e:
+        print(f"⚠️ 상태별 문의 조회 중 오류 발생: {e}")
+        return []
+    finally:
+        conn.close()
+
 def save_inquiry_log(log_id: str, customer_id: str, input_text: str, ai_action_failed: str) -> None:
     """새로운 문의 로그를 DB에 저장합니다."""
     conn = get_db_connection()
